@@ -1,0 +1,10 @@
+D:\space\vip_boss\src\main\java\cn\eeepay\boss\action\activity\ActivityManagementAction.java
+D:\space\vip_boss\src\main\java\cn\eeepay\boss\action\integral\ActivityChoiceAction.java
+D:\space\vip_boss\src\main\webapp\js\controllers\activity\activityManagement\contentAddCtrl.js
+D:\space\vip_boss\src\main\webapp\js\controllers\activity\activityManagement\contentEditCtrl.js
+D:\space\vip_boss\src\main\webapp\js\controllers\integral\businessActivity\busContentAddCtrl.js
+D:\space\vip_boss\src\main\webapp\js\controllers\integral\businessActivity\busContentEditCtrl.js
+
+
+D:\space\vip_boss\src\main\java\cn\eeepay\framework\dao\integral\BusinessFlowDao.java
+D:\space\vip_boss\src\main\webapp\views\integral\businessFlow\businessFlowQuery.html

@@ -1,0 +1,126 @@
+<!-- 物品管理 -->
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a>主页</a></li>
+            <li><a>积分商城</a></li>
+            <li class="active"><strong>物品管理</strong></li>
+        </ol>
+    </div>
+</div>
+<!-- 主要内容 -->
+<div class="wrapper wrapper-content animated fadeIn" ng-app ng-controller="goodsManagementQueryCtrl">
+    <form class="form-horizontal" id="form1">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="">
+                    <div class="panel-body ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="ibox-title">
+                                <h5>物品管理条件</h5>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">物品名称:</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" ng-model="info.goodsName">
+                                </div>
+                                <label class="col-sm-1 control-label">物品类型:</label>
+                                <div class="col-sm-2">
+                                    <select class="form-control" ng-model="info.goodsType" ng-options="x.value as x.text for x in goodsTypeSelect"/>
+                                </div>
+                                <label class="col-sm-1 control-label">业务组:</label>
+                                <div class="col-sm-2">
+                                    <select class="form-control" ng-model="info.businessNo" ng-options="x.value as x.text for x in businessNoList"/>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-top: 30px">
+                                <div class="col-sm-8">
+                                    <label class="col-sm-2 control-label"></label>
+                                    <button class="btn btn-primary6 btn-mr20" type="button" ng-click="query()" >查询</button>
+                                    <button class="btn btn-primary3 btn-mr20" type="button" ng-click="clear()" >清空</button>
+                                    <button class="btn btn-primary5 btn-mr20" type="button" ng-show="hasPermit('goodsManagement.addGood')" ng-click="addModal(0,null)" >新增</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="ibox-title">
+                                <h5>物品管理列表</h5>
+                            </div>
+                            <div class="form-group">
+                                <div class="gridStyle" ui-grid="userGrid" ui-grid-selection ui-grid-pagination
+                                     ui-grid-resize-columns ui-grid-pinning></div>
+                                <div ng-show="loadImg" class="timg"></div>
+                            </div>
+                        </div>
+                        <div style="height:30px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div id="addInfoModal" class="modal fade form-horizontal" tabindex="4" role="dialog">
+        <div class="modal-dialog" style="height:450px;width:900px">
+            <div class="modal-content" >
+                <form class="form-horizontal" name="addHorizontalCard" novalidate>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            &times;</button>
+                        <h3 class="modal-title">{{addTitle}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>物品名称:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" name="goodsName" required maxlength="20" ng-model="addInfo.goodsName">
+                                <div class="req_mesg" ng-show="addHorizontalCard.goodsName.$dirty && addHorizontalCard.goodsName.$invalid">
+                                    <span ng-show="addHorizontalCard.goodsName.$error.required">物品名称不能为空</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>物品类型:</label>
+                            <div class="col-sm-3">
+                                <select class="form-control" ng-model="addInfo.goodsType" name="goodsType" required ng-options="x.value as x.text for x in goodsTypeSelectAdd"/>
+                                <div class="req_mesg" ng-show="addHorizontalCard.goodsType.$dirty && addHorizontalCard.goodsType.$invalid">
+                                    <span ng-show="addHorizontalCard.goodsType.$error.required">物品类型不能为空</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>业务组:</label>
+                            <div class="col-sm-3">
+                                <select class="form-control" ng-model="addInfo.businessNo" name="businessNo" required ng-options="x.value as x.text for x in businessNoListAdd" />
+                                <div class="req_mesg" ng-show="addHorizontalCard.businessNo.$dirty && addHorizontalCard.businessNo.$invalid">
+                                    <span ng-show="addHorizontalCard.businessNo.$error.required">业务组不能为空</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>来源ID:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" name="originId" required ng-model="addInfo.originId">
+                                <div class="req_mesg" ng-show="addHorizontalCard.originId.$dirty && addHorizontalCard.originId.$invalid">
+                                    <span ng-show="addHorizontalCard.originId.$error.required">来源ID不能为空</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-group control-label">
+                            <label class="col-sm-1 control-label"></label>
+                            <div class="col-sm-6">
+                                <button class="btn btn-primary btn-mr20" ng-disabled="addHorizontalCard.$invalid || submitting" type="button" ng-click='addInfoSubmit()' >确定</button>
+                                <button class="btn btn-primary4" type="button" ng-click='hideModal()'>返回</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

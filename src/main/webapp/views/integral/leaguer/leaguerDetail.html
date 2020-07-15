@@ -1,0 +1,161 @@
+<!-- head -->
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a>主页</a></li>
+            <li><a>会员管理</a></li>
+            <li class="active"><strong>会员详情</strong></li>
+        </ol>
+    </div>
+</div>
+
+<!-- content-->
+<div class="wrapper wrapper-content animated fadeIn" ng-controller="leaguerDetailCtrl">
+    <form class="form-horizontal" id="form1" name="horizontalCard">
+        <div class="form-group">
+            <div class="col-lg-12">
+                <div class="tabs-container tab_other">
+                    <uib-tabset>
+                        <uib-tab>
+                            <uib-tab-heading>
+									<span class="block m-t-xs"> <i class="fa fa-laptop"></i> <strong
+                                            class="font-bold">会员基本资料</strong>
+									</span>
+                            </uib-tab-heading>
+                            <div class="panel-body ibox float-e-margins">
+                                <div class="ibox-content">
+                                    <div class="row">
+                                        <div class="ibox-title">
+                                            <h5>会员等级与积分</h5>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label">会员编号:</label>
+                                            <div class="col-sm-2 checkbox" ng-bind="info.leaguerNo"></div>
+                                            <label class="col-sm-1 control-label">会员名称:</label>
+                                            <div class="col-sm-2 checkbox" ng-bind="info.leaguerName"></div>
+                                            <label class="col-sm-1 control-label">用户编号:</label>
+                                            <div class="col-sm-2 checkbox" ng-bind="info.originUserNo"></div>
+                                            <label class="col-sm-1 control-label">用户手机号:</label>
+                                            <div class="col-sm-2 checkbox" >
+                                                <span ng-bind="info.mobilePhone"></span>
+                                                <button type="button" ng-show="dataSta&&hasPermit('leaguer.leaguerDetailSensitive')" ng-click="getDataProcessing(false)" >显示</button>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label">M等级:</label>
+                                            <div class="col-sm-2 checkbox" ng-bind="info.mLevelName"></div>
+                                            <label class="col-sm-1 control-label">M值:</label>
+                                            <div class="col-sm-2 checkbox" ng-bind="info.mBalance"></div>
+                                            <label class="col-sm-1 control-label">会员等级:</label>
+                                            <div class="col-sm-2 checkbox" ng-bind="info.vipLevelName"></div>
+                                            <label class="col-sm-1 control-label">会员成长值:</label>
+                                            <div class="col-sm-2 checkbox" ng-bind="info.growUpBalance"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label">会员积分:</label>
+                                            <div class="col-sm-2 checkbox" ng-bind="info.scoreBalance"></div>
+                                            <label class="col-sm-1 control-label">业务组:</label>
+                                            <div class="col-sm-2 checkbox" ng-bind="info.businessName"></div>
+                                            <label class="col-sm-1 control-label">身份证号:</label>
+                                            <div class="col-sm-2 checkbox" >
+                                            <span ng-bind="info.idCardNo"></span>
+                                            <button type="button" ng-show="dataSta&&hasPermit('leaguer.leaguerDetailSensitive')" ng-click="getDataProcessing(false)">显示</button>
+                                            </div>
+                                            <label class="col-sm-1 control-label">生日:</label>
+                                            <div class="col-sm-2 checkbox" ng-bind="info.birthday | date:'yyyy-MM-dd'"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label">创建时间:</label>
+                                            <div class="col-sm-2 checkbox" ng-bind="info.createTime | date:'yyyy-MM-dd HH:mm:ss'"></div>
+                                            <label class="col-sm-1 control-label">会员时间:</label>
+                                            <div class="col-sm-2 checkbox" ng-bind="info.growDate | date:'yyyy-MM-dd'"></div>
+                                            <label class="col-sm-1 control-label">会员到期时间:</label>
+                                            <div class="col-sm-2 checkbox" ng-bind="info.growUpEffe | date:'yyyy-MM-dd'"></div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="ibox-title">
+                                            <h5>会员等级更新记录</h5>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-10">
+                                                <div class="gridStyle" style="height:300px" ui-grid="growGrid"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </uib-tab>
+                        <uib-tab>
+                            <uib-tab-heading>
+									<span class="block m-t-xs"> <i class="fa fa-laptop"></i> <strong
+                                            class="font-bold">会员积分</strong>
+									</span>
+                            </uib-tab-heading>
+                            <div class="panel-body ibox float-e-margins">
+                                <div class="ibox-content">
+                                    <div class="row">
+                                        <div class="ibox-title">
+                                            <h5>会员积分列表</h5>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label"></label>
+                                            <div class="col-sm-10">
+                                                <div class="gridStyle" style="height:100px" ui-grid="leaguerScoreGrid" ></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="ibox-title">
+                                            <h5>会员积分明细</h5>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label">积分出入账类型:</label>
+                                            <div class="col-sm-2">
+                                                <select class="form-control" ng-model="addInfo.accType" ng-options="x.value as x.text for x in accTypeSelect"/>
+                                            </div>
+                                            <label class="col-sm-1 control-label">来源类型:</label>
+                                            <div class="col-sm-2">
+                                                <select class="form-control" ng-model="addInfo.fromType" ng-options="x.value as x.text for x in fromTypeSelect"/>
+                                            </div>
+                                            <label class="col-sm-1 control-label">创建时间:</label>
+                                            <div class="col-sm-5">
+                                                <input id="d5255" class="form-control" type="datetime" ng-model="addInfo.createTimeBegin" onchange=""  style="width:auto;display:inline-block;"
+                                                       onFocus="var d5256=$dp.$('d5256');WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss',onpicked:function(){d5256.focus();},maxDate:'#F{$dp.$D(\'d5256\')}'})"/>
+                                                ~
+                                                <input id="d5256" class="form-control" type="datetime"  ng-model="addInfo.createTimeEnd" onchange=""  style="width:auto;display:inline-block;"
+                                                       onFocus="WdatePicker({skin:'whyGreen',dateFmt: 'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'d5255\')}'})"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group" style="margin-top: 30px">
+                                            <div class="col-sm-8">
+                                                <label class="col-sm-2 control-label"></label>
+                                                <button class="btn btn-primary6 btn-mr20" type="button" ng-click="query(1)" >查询</button>
+                                                <button class="btn btn-primary3 btn-mr20" type="button" ng-click="clear()" >清空</button>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="margin-top: 30px">
+                                            <div class="gridStyle" ui-grid="scoreAccountGrid" ui-grid-selection ui-grid-pagination
+                                                 ui-grid-resize-columns ui-grid-pinning></div>
+                                            <div ng-show="loadImg" class="timg"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </uib-tab>
+                    </uib-tabset>
+                </div>
+            </div>
+
+            <div class="col-lg-12 bgff">
+                <div class="col-sm-12">
+                    <div class="col-lg-3"></div>
+                    <div class="col-sm-6">
+                        <a class="btn btn-primary4" ui-sref="leaguer.leaguerList" >返回</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

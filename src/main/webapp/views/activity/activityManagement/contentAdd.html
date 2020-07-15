@@ -1,0 +1,230 @@
+<!-- head -->
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a>主页</a></li>
+            <li><a>会员活动/用户激活</a></li>
+            <li class="active"><strong>活动内容新增</strong></li>
+        </ol>
+    </div>
+</div>
+
+<!-- content-->
+<div class="wrapper wrapper-content animated fadeIn" ng-controller="contentAddCtrl">
+    <form class="form-horizontal" id="form1" name="horizontalCard">
+        <div class="form-group">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+
+                    <div class="row">
+                        <div class="ibox-title">
+                            <h5>活动内容新增</h5>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>活动内容:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" name="activeName" required maxlength="20" ng-model="addInfo.activeName">
+                                <div class="req_mesg" ng-show="horizontalCard.activeName.$dirty && horizontalCard.activeName.$invalid">
+                                    <span ng-show="horizontalCard.activeName.$error.required">活动内容不能为空</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>活动说明:</label>
+                            <div class="col-sm-5">
+                                <textarea type="text" class="form-control" name="activeDesc" required maxlength="200" ng-model="addInfo.activeDesc">
+                                </textarea>
+                                <div class="req_mesg" ng-show="horizontalCard.activeDesc.$dirty && horizontalCard.activeDesc.$invalid">
+                                    <span ng-show="horizontalCard.activeDesc.$error.required">活动说明不能为空</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>类型:</label>
+                            <div class="col-sm-2">
+                                <select class="form-control" ng-model="addInfo.activeType" name="activeType" required ng-options="x.value as x.text for x in activeTypeSelect" ng-change="activeTypeChange()"/>
+                                <div class="req_mesg" ng-show="horizontalCard.activeType.$dirty && horizontalCard.activeType.$invalid">
+                                    <span ng-show="horizontalCard.activeType.$error.required">类型不能为空</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-if="methodSta">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>奖励方式:</label>
+                            <div class="col-sm-2">
+                                <select class="form-control" ng-model="addInfo.awardMethod" name="awardMethod" required ng-options="x.value as x.text for x in awardMethodSelect" />
+                                <div class="req_mesg" ng-show="horizontalCard.awardMethod.$dirty && horizontalCard.awardMethod.$invalid">
+                                    <span ng-show="horizontalCard.awardMethod.$error.required">奖励方式不能为空</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-show="tableSta">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>奖励配置:</label>
+                            <div class="col-sm-10">
+                                <a class="btn btn-primary5 btn-mr20" style="float:right;" type="button" ng-show="hasPermit('activityManagement.addLuckPrizeTemplate')" ng-click="addDataModal()" >新增</a>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-show="tableSta">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10">
+                                <div class="gridStyle" style="height:300px" ui-grid="userGrid" ui-grid-auto-resize ui-grid-selection ui-grid-resize-columns ui-grid-pinning></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 bgff">
+                <div class="col-sm-12">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-6">
+                        <button class="btn btn-primary btn-mr20" type="button" ng-click="commitInfo()" ng-disabled="horizontalCard.$invalid || submitting">提交</button>
+                        <a class="btn btn-primary4" ng-click="goBackFun()" >返回</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div id="addInfoModal" class="modal fade form-horizontal" tabindex="4" role="dialog">
+        <div class="modal-dialog" style="height:1000px;width:1000px">
+            <div class="modal-content" >
+                <form class="form-horizontal" name="horizontalCardOne" novalidate>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            &times;</button>
+                        <h3 class="modal-title">{{addTitle}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        <!--内容1 2 -->
+                        <div ng-if="addInfo.activeType=='1'||addInfo.activeType=='2'">
+                            <div class="form-group" ng-if="addInfo.activeType=='2'">
+                                <label class="col-sm-2 control-label"><i class="red_req">*</i>边界值:</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" name="standardAmount" required ng-model="addInfoItem.standardAmount" ng-pattern="/^([1-9]\d{0,9}|0)(\.\d{1,2})?$/" >
+                                    <div class="req_mesg" ng-show="horizontalCardOne.standardAmount.$dirty && horizontalCardOne.standardAmount.$invalid">
+                                        <span ng-show="horizontalCardOne.standardAmount.$error.required">边界值不能为空</span>
+                                        <span ng-show="horizontalCardOne.standardAmount.$error.pattern">边界值格式不符</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><i class="red_req">*</i>奖励类型:</label>
+                                <div class="col-sm-3">
+                                    <select class="form-control" ng-model="addInfoItem.rewardType" name="rewardType" required ng-options="x.value as x.text for x in rewardTypeSelect" ng-change="awardTypeChange(3)"/>
+                                    <div class="req_mesg" ng-show="horizontalCardOne.rewardType.$dirty && horizontalCardOne.rewardType.$invalid">
+                                        <span ng-show="horizontalCardOne.rewardType.$error.required">奖品类型不能为空</span>
+                                    </div>
+                                </div>
+                                <label style="margin-top:7px;color: red;">注:模板内无法添加和业务属性相关的券</label>
+                            </div>
+                            <div ng-if="conSta">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><i class="red_req">*</i>选择券:</label>
+                                    <div class="col-sm-3">
+                                        <select class="form-control" ng-model="addInfoItem.calcType" name="calcType"  required ng-options="x.value as x.text for x in conList"/>
+                                        <div class="req_mesg" ng-show="horizontalCardOne.calcType.$dirty && horizontalCardOne.calcType.$invalid">
+                                            <span ng-show="horizontalCardOne.calcType.$error.required">选择券不能为空</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><i class="red_req">*</i>数量:</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" name="awardNum" required ng-model="addInfoItem.awardNum" ng-pattern="/^[1-9][0-9]*$/" >
+                                        <div class="req_mesg" ng-show="horizontalCardOne.awardNum.$dirty && horizontalCardOne.awardNum.$invalid">
+                                            <span ng-show="horizontalCardOne.awardNum.$error.required">数量不能为空</span>
+                                            <span ng-show="horizontalCardOne.awardNum.$error.pattern">数量格式不符</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-if="numSta">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><i class="red_req">*</i>值类型:</label>
+                                    <div class="col-sm-3">
+                                        <select class="form-control" ng-model="addInfoItem.calcType" name="calcType"  disabled ng-options="x.value as x.text for x in calcTypeSelect"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><i class="red_req">*</i>数值:</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" name="awardNum" required ng-model="addInfoItem.awardNum" ng-pattern="/^[1-9][0-9]*$/" >
+                                        <div class="req_mesg" ng-show="horizontalCardOne.awardNum.$dirty && horizontalCardOne.awardNum.$invalid">
+                                            <span ng-show="horizontalCardOne.awardNum.$error.required">数值不能为空</span>
+                                            <span ng-show="horizontalCardOne.awardNum.$error.pattern">数值格式不符</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-if="integralSta">
+                                    <label class="col-sm-2 control-label"><i class="red_req">*</i>有效期:</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" style="width:100px; float:left" name="expireDay" required ng-model="addInfoItem.expireDay">
+                                        <span style="float:left; padding:7px 5PX 0 5PX;">单位:个月</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-if="moneySta">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label"><i class="red_req">*</i>值类型:</label>
+                                        <div class="col-sm-3">
+                                            <select class="form-control" ng-model="addInfoItem.calcType" name="calcType"  disabled ng-options="x.value as x.text for x in calcTypeSelect"/>
+                                        </div>
+                                    </div>
+                                    <label class="col-sm-2 control-label"><i class="red_req">*</i>数值:</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" name="awardNum" required ng-model="addInfoItem.awardNum" ng-pattern="/^([1-9]\d{0,9}|0)(\.\d{1,2})?$/" >
+                                        <div class="req_mesg" ng-show="horizontalCardOne.awardNum.$dirty && horizontalCardOne.awardNum.$invalid">
+                                            <span ng-show="horizontalCardOne.awardNum.$error.required">数值不能为空</span>
+                                            <span ng-show="horizontalCardOne.awardNum.$error.pattern">数值格式不符</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--内容3 -->
+                        <div ng-if="addInfo.activeType=='3'">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><i class="red_req">*</i>类型:</label>
+                                <div class="col-sm-3">
+                                    <select class="form-control" ng-model="addInfoItem.tranType" name="tranType"  disabled ng-options="x.value as x.text for x in tranTypeSelect"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><i class="red_req">*</i>值类型:</label>
+                                <div class="col-sm-3">
+                                    <select class="form-control" ng-model="addInfoItem.calcType" name="calcType"  disabled ng-options="x.value as x.text for x in calcTypeSelect"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><i class="red_req">*</i>奖励比例:</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" name="awardNum" required ng-model="addInfoItem.awardNum" ng-pattern="/^([1-9]\d{0,9}|0)(\.\d{1,3})?$/" >
+                                    <div class="req_mesg" ng-show="horizontalCardOne.awardNum.$dirty && horizontalCardOne.awardNum.$invalid">
+                                        <span ng-show="horizontalCardOne.awardNum.$error.required">奖励比例不能为空</span>
+                                        <span ng-show="horizontalCardOne.awardNum.$error.pattern">奖励比例格式不符</span>
+                                    </div>
+                                </div>
+                                <label style="margin-top:7px;">%</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><i class="red_req">*</i>计算公式:</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" name="awardTemplateFormula" disabled ng-model="addInfoItem.awardTemplateFormula" >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-group control-label">
+                            <label class="col-sm-1 control-label"></label>
+                            <div class="col-sm-6">
+                                <button class="btn btn-primary btn-mr20" type="button" ng-disabled="horizontalCardOne.$invalid || submitting" ng-click='saveDataTable()' >确定</button>
+                                <button class="btn btn-primary4 btn-mr20" type="button" ng-click='hideDataModal()'>返回</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

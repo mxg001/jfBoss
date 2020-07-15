@@ -1,0 +1,79 @@
+<!-- head -->
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a>主页</a></li>
+            <li><a>会员活动/用户激活</a></li>
+            <li class="active"><strong>活动内容详情</strong></li>
+        </ol>
+    </div>
+</div>
+
+<!-- content-->
+<div class="wrapper wrapper-content animated fadeIn" ng-controller="contentDetailCtrl">
+    <form class="form-horizontal" id="form1" name="horizontalCard">
+        <div class="form-group">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+
+                    <div class="row">
+                        <div class="ibox-title">
+                            <h5>活动内容修改</h5>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>活动内容:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" name="activeName" disabled ng-model="addInfo.activeName">
+                                <div class="req_mesg" ng-show="horizontalCard.activeName.$dirty && horizontalCard.activeName.$invalid">
+                                    <span ng-show="horizontalCard.activeName.$error.required">活动内容不能为空</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>活动说明:</label>
+                            <div class="col-sm-5">
+                                            <textarea type="text" class="form-control" name="activeDesc" disabled ng-model="addInfo.activeDesc">
+                                            </textarea>
+                                <div class="req_mesg" ng-show="horizontalCard.activeDesc.$dirty && horizontalCard.activeDesc.$invalid">
+                                    <span ng-show="horizontalCard.activeDesc.$error.required">活动说明不能为空</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>类型:</label>
+                            <div class="col-sm-2">
+                                <select class="form-control" ng-model="addInfo.activeType" name="activeType" disabled ng-options="x.value as x.text for x in activeTypeSelect" />
+                                <div class="req_mesg" ng-show="horizontalCard.activeType.$dirty && horizontalCard.activeType.$invalid">
+                                    <span ng-show="horizontalCard.activeType.$error.required">类型不能为空</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-if="methodSta">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>奖励方式:</label>
+                            <div class="col-sm-2">
+                                <select class="form-control" ng-model="addInfo.awardMethod" name="awardMethod" disabled ng-options="x.value as x.text for x in awardMethodSelect" />
+                                <div class="req_mesg" ng-show="horizontalCard.awardMethod.$dirty && horizontalCard.awardMethod.$invalid">
+                                    <span ng-show="horizontalCard.awardMethod.$error.required">奖励方式不能为空</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-show="tableSta">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10">
+                                <div class="gridStyle" style="height:300px" ui-grid="userGrid" ui-grid-auto-resize ui-grid-selection ui-grid-resize-columns ui-grid-pinning></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 bgff">
+                <div class="col-sm-12">
+                    <div class="col-lg-3"></div>
+                    <div class="col-sm-6">
+                        <a class="btn btn-primary4" ng-click="goBackFun()" >返回</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

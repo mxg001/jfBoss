@@ -1,0 +1,115 @@
+<!-- head -->
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a>主页</a></li>
+            <li><a>会员活动</a></li>
+            <li class="active"><strong>后置条件详情</strong></li>
+        </ol>
+    </div>
+</div>
+
+<!-- content-->
+<div class="wrapper wrapper-content animated fadeIn" ng-controller="cashMeetAfterConditionDetailCtrl">
+    <form class="form-horizontal" id="form1" name="horizontalCard">
+        <div class="form-group">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+
+                    <div class="row">
+                        <div class="ibox-title">
+                            <h5>后置条件详情</h5>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>活动内容:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" name="activeName" disabled ng-model="addInfo.activeName">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>活动说明:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" name="activeDesc" disabled ng-model="addInfo.activeDesc">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>达标条件:</label>
+                            <div class="col-sm-4">
+                                A、邀请的超级推用户交易金额大于等于<input type="text" style="width: 50px;" name="userTransAmount" disabled ng-model="addInfo.userTransAmount">元，且人数大于等于<input type="text" style="width: 50px;" name="userTransPersons" disabled ng-model="addInfo.userTransPersons">人；<br />
+                                B、会员积分消耗开奖次数大于等于<input type="text" style="width: 50px; margin-top:10px;" name="memberAwardNum" disabled ng-model="addInfo.memberAwardNum">次；<br />
+                                C、交易收款开奖次数大于等于<input type="text" style="width: 50px; margin-top:10px;" name="transAmountNum" disabled ng-model="addInfo.transAmountNum">次；
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>奖励类型:</label>
+                            <div class="col-sm-3">
+                                现金返现
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>策略类型:</label>
+                            <div class="col-sm-2">
+                                <select class="form-control" ng-model="addInfo.policyType" name="policyType" disabled ng-change="policyTypeChange()" ng-options="x.value as x.text for x in policyTypeSelect"/>
+                            </div>
+                        </div>
+                        <div id="awardPolicy" ng-show="policyTypeVisible1">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">奖励策略:</label>
+                                <div ng-repeat="item in addInfo.policyTypeList">
+                                    <div class="form-group">
+                                        <label ng-if="$index != 0" class="col-sm-2 control-label"></label>
+                                        <div class="col-sm-4">
+                                            <input hidden ng-model="item.index" value="$index">奖励<input type="text" disabled style="width: 50px;" ng-model="item.awardNum">&nbsp;单日数量限制<input type="text" disabled style="width: 50px;" ng-model="item.dayNums">&nbsp;概率<input type="text" style="width: 50px;" disabled ng-model="item.awardOdds">%&nbsp;&nbsp;<br />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-show="policyTypeVisible2">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">奖励策略:</label>
+                                <div class="col-sm-3">
+                                    <input type="text" style="width: 50px;" name="awardDesc" disabled ng-model="addInfo.sectionBegin">-<input type="text" style="width: 50px;" name="awardDesc" disabled ng-model="addInfo.sectionEnd">元
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>有效期类型:</label>
+                            <div class="col-sm-2">
+                                <select class="form-control" ng-model="addInfo.expiryDateType" name="expiryDateType" disabled ng-options="x.value as x.text for x in expriryDateTypeSelect"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>有效期设置:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" name="expiryNum" disabled ng-model="addInfo.expiryNum">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>单日奖励次数上限:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" name="expendNumber" disabled ng-model="addInfo.expendNumber">
+                            </div>
+                            <label style="margin-top:7px; color:red;">注:-1为无限次数</label>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>奖励总次数:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" name="allNum" disabled ng-model="addInfo.allNum">
+                            </div>
+                            <label style="margin-top:7px; color:red;">注:-1为无限次数</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 bgff">
+                <div class="col-sm-12">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-6">
+                        <a class="btn btn-primary4" ng-click="goBackFun()" >返回</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

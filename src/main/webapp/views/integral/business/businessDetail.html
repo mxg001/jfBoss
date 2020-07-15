@@ -1,0 +1,158 @@
+<!-- head -->
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a>主页</a></li>
+            <li><a>业务管理</a></li>
+            <li class="active"><strong>业务组详情</strong></li>
+        </ol>
+    </div>
+</div>
+
+<!-- content-->
+<div class="wrapper wrapper-content animated fadeIn" ng-controller="businessDetailCtrl">
+    <form class="form-horizontal" id="form1" name="horizontalCard">
+        <div class="form-group">
+            <div class="col-lg-12">
+                <div class="tabs-container tab_other">
+                    <uib-tabset>
+                        <uib-tab>
+                            <uib-tab-heading>
+									<span class="block m-t-xs"> <i class="fa fa-laptop"></i> <strong
+                                            class="font-bold">业务组基本信息</strong>
+									</span>
+                            </uib-tab-heading>
+                            <div class="panel-body ibox float-e-margins">
+                                <div class="ibox-content">
+                                    <div class="row">
+                                        <div class="ibox-title">
+                                            <h5>会员等级与积分</h5>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-6">
+                                                <div style="height:300px"  ui-grid="growLevelGrid" ui-grid-selection ui-grid-resize-columns ui-grid-pinning></div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div style="height:300px"  ui-grid="mLevelGrid" ui-grid-selection ui-grid-resize-columns ui-grid-pinning></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="ibox-title">
+                                            <h5>会员成长值处理规则</h5>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <span style="float:left;padding:7px 5px 0 61px;font-weight:700;">成长值调整规则:</span>
+                                                <span style="float:left;padding:7px 5PX 0 5PX;">每达到新等级,会员自获得当天算起</span>
+                                                <input type="text" class="form-control" style="width:50px; float:left" name="levelEffeDate" readonly ng-model="addInfo.levelEffeDate">
+                                                <span style="float:left; padding:7px 5PX 0 5PX;">天内有效，到期当天24点成长值 * </span>
+                                                <input type="text" class="form-control" style="width:50px; float:left" name="levelRate" readonly ng-model="addInfo.levelRate">
+                                                <span style="float:left;padding:7px 5PX 0 5PX;">+24点后成长值重新计算等级</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="ibox-title">
+                                            <h5>积分说明</h5>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-11" >
+                                                <div style="height: 250px;overflow:hidden;overflow-y:scroll" class="form-control" ng-bind-html="scoreDesc | trustHtml" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="ibox-title">
+                                            <h5>会员等级与成长值说明</h5>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-11" >
+                                                <div style="height: 250px;overflow:hidden;overflow-y:scroll" class="form-control" ng-bind-html="levelDesc | trustHtml" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </uib-tab>
+                        <uib-tab>
+                            <uib-tab-heading>
+									<span class="block m-t-xs"> <i class="fa fa-laptop"></i> <strong
+                                            class="font-bold">任务选择</strong>
+									</span>
+                            </uib-tab-heading>
+                            <div class="panel-body ibox float-e-margins">
+                                <div class="ibox-content">
+                                    <div class="row">
+                                        <div class="ibox-title">
+                                            <h5>任务选择列表</h5>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="gridStyle" ui-grid="userGrid" ui-grid-selection
+                                                 ui-grid-resize-columns ui-grid-pinning></div>
+                                            <div ng-show="loadImg" class="timg"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </uib-tab>
+                        <uib-tab>
+                            <uib-tab-heading>
+									<span class="block m-t-xs"> <i class="fa fa-laptop"></i> <strong
+                                            class="font-bold">活动选择</strong>
+									</span>
+                            </uib-tab-heading>
+                            <div class="panel-body ibox float-e-margins">
+                                <div class="ibox-content">
+                                    <div class="row">
+                                        <div class="ibox-title">
+                                            <h5>活动选择列表</h5>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="gridStyle" ui-grid="userGridActivity" ui-grid-selection
+                                                 ui-grid-resize-columns ui-grid-pinning></div>
+                                            <div ng-show="loadImg" class="timg"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </uib-tab>
+                        <uib-tab>
+                            <uib-tab-heading>
+									<span class="block m-t-xs"> <i class="fa fa-laptop"></i> <strong
+                                            class="font-bold">预览</strong>
+									</span>
+                            </uib-tab-heading>
+
+                            <div class="panel-body ibox float-e-margins">
+                                <div class="ibox-content">
+                                    <div class="row">
+                                        <div class="ibox-title">
+                                            <h5>预览</h5>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="gridStyle" ui-grid="userPreviewGrid" ui-grid-selection
+                                                 ui-grid-resize-columns ui-grid-pinning></div>
+                                            <div ng-show="loadImg" class="timg"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </uib-tab>
+                    </uib-tabset>
+                </div>
+            </div>
+
+            <div class="col-lg-12 bgff">
+                <div class="col-sm-12">
+                    <div class="col-lg-3"></div>
+                    <div class="col-sm-6">
+                        <a class="btn btn-primary4" ui-sref="management.business" >返回</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+	 ====================================================================== 
+     flowmoney builder 4 product                                                      
+     ====================================================================== 
+-->
+     
+<project name="jfBoss" default="pack">
+	<property name="tarForBoss2" value="tarForBoss2"/>
+	<property name="Web" value="./target/jfBoss"/>
+	<property name="appName" value="jfBoss"/>
+	<property name="source" value="1.5"/>
+	<property name="target" value="1.5"/>
+	<property name="app.dir" value="." />
+
+	
+	<path id="jfBoss.classpath">
+		<fileset dir="${app.dir}/target/jfBoss/WEB-INF/lib/">
+		</fileset>
+	</path>
+
+	<target name="init">
+		<tstamp>
+			<format property="TODAY" pattern="yyyyMMdd" locale="cn"/>
+		</tstamp>		
+		<delete dir="${tarForBoss2}"/>
+		<mkdir dir="${tarForBoss2}"/>
+		<echo>${appName} ${TODAY}</echo>
+	</target>
+	<target name="packStatic" depends="init">
+		<tar destfile="${tarForBoss2}/${appName}-${TODAY}.tar" >
+			<tarfileset dir="${Web}">
+				<!--  全量包 -->
+				<!--<include name="**/*.*"/>-->
+
+				<include name="WEB-INF/classes/cn/eeepay/boss/action/activity/ActivityManagementAction*.class"/>
+				<include name="WEB-INF/classes/cn/eeepay/boss/action/integral/PopupAction*.class"/>
+
+				<include name="WEB-INF/classes/cn/eeepay/framework/dao/activity/ActivityDetailDao*.class"/>
+				<include name="WEB-INF/classes/cn/eeepay/framework/dao/integral/PopupDao*.class"/>
+
+				<include name="WEB-INF/classes/cn/eeepay/framework/model/integral/PopupConfig*.class"/>
+
+				<include name="WEB-INF/classes/cn/eeepay/framework/service/activity/ActivityDetailService*.class"/>
+				<include name="WEB-INF/classes/cn/eeepay/framework/service/activity/ActivityDetailService*.class"/>
+				<include name="WEB-INF/classes/cn/eeepay/framework/service/integral/PopupService*.class"/>
+
+				<include name="WEB-INF/classes/cn/eeepay/framework/serviceImpl/activity/ActivityDetailServiceImpl*.class"/>
+				<include name="WEB-INF/classes/cn/eeepay/framework/serviceImpl/integral/PopupServiceImpl*.class"/>
+
+				<include name="views/integral/popup/popupAdd.html"/>
+				<include name="views/integral/popup/popupDetail.html"/>
+				<include name="views/integral/popup/popupEdit.html"/>
+				<include name="views/integral/popup/popupQuery.html"/>
+
+				<include name="js/controllers/integral/popup/popupAddCtrl.js"/>
+				<include name="js/controllers/integral/popup/popupDetailCtrl.js"/>
+				<include name="js/controllers/integral/popup/popupEditCtrl.js"/>
+				<include name="js/controllers/integral/popup/popupQueryCtrl.js"/>
+				<include name="js/states/integral.js"/>
+
+			</tarfileset>
+		</tar>
+	</target>
+	
+	<target name="clean">
+		<delete dir="${tarForBoss2}"/>
+		<mkdir dir="${tarForBoss2}"/>
+	</target>
+
+	<target name="pack" depends="packStatic"/>
+
+	<target name="all" depends="clean,packStatic"/>
+</project>

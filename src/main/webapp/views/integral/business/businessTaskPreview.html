@@ -1,0 +1,52 @@
+<!-- 超级银行家用户管理页面 -->
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a>主页</a></li>
+            <li><a>业务管理</a></li>
+            <li class="active"><strong>预览</strong></li>
+        </ol>
+    </div>
+</div>
+<!-- 主要内容 -->
+<div class="wrapper wrapper-content animated fadeIn" ng-app ng-controller="businessTaskVipLevelPreview">
+    <form class="form-horizontal" id="form1">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="">
+                    <div class="panel-body ibox float-e-margins">
+                    </div>
+                    <div class="panel-body ibox float-e-margins">
+                        <div class="ibox-title">
+                            <div class="ibox-content">
+                                <div class="ibox-title">
+                                    <h5>会员等级与权益</h5>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <button  class="btn btn-primary5 btn-mr20" style="float:right;" type="button" ng-click="addBusinessTaskPreview()" >新增</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="gridStyle" ui-grid="userGrid" ui-grid-selection
+                                         ui-grid-resize-columns ui-grid-pinning></div>
+                                    <div ng-show="loadImg" class="timg"></div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-4"></div>
+                                    <div class="col-sm-6">
+                                        <button class="btn btn-primary btn-mr20" ng-show="hasPermit('businessInfoAction.saveBatchBusinessTaskPreview')" type="button" ng-click='save()'>保存</button>
+                                        <a class="btn btn-primary4" ui-sref="management.business" href="#/management/business">返回</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="height:30px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+</div>

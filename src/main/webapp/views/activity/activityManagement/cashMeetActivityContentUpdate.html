@@ -1,0 +1,172 @@
+<!-- head -->
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a>主页</a></li>
+            <li><a>会员活动</a></li>
+            <li class="active"><strong>活动内容</strong></li>
+        </ol>
+    </div>
+</div>
+
+<!-- content-->
+<div class="wrapper wrapper-content animated fadeIn" ng-controller="cashMeetActivityContentConfigCtrl">
+    <form class="form-horizontal" id="form1" name="horizontalCard">
+        <div class="form-group">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="ibox-title">
+                            <h5>活动类型</h5>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>活动类型:</label>
+                            <div class="col-sm-2">
+                                <select class="form-control" ng-model="addInfo.activeType" name="activeType" disabled ng-options="x.value as x.text for x in activeTypeSelect"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="ibox-title">
+                            <h5>活动内容修改</h5>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>活动内容:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" ng-model="addInfo.activeName" required name="activeName">
+                                <div class="req_mesg" ng-show="horizontalCard.activeName.$dirty && horizontalCard.activeName.$invalid">
+                                    <span ng-show="horizontalCard.activeName.$error.required">活动内容不能为空</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>活动说明:</label>
+                            <div class="col-sm-5">
+                                <textarea type="text" class="form-control" ng-model="addInfo.activeDesc" required name="activeDesc">
+                                </textarea>
+                                <div class="req_mesg" ng-show="horizontalCard.activeDesc.$dirty && horizontalCard.activeDesc.$invalid">
+                                    <span ng-show="horizontalCard.activeDesc.$error.required">活动说明不能为空</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>达标条件:</label>
+                            <div class="col-sm-3" ng-show="loginApp">
+                                首次登录APP
+                            </div>
+                            <div class="col-sm-3" ng-show="tradAmountUpdate">
+                                单笔成功交易金额大于等于<input type="text" style="width: 50px;" name="tradAmountUpdateValue" ng-model="addInfo.tradAmountUpdateValue">元
+                            </div>
+                            <div class="col-sm-3" ng-show="memberUpdate">
+                                单次消耗<input type="text" style="width: 50px;" name="memberUpdateValue" ng-model="addInfo.memberUpdateValue">会员积分
+                            </div>
+                            <div class="col-sm-3" ng-show="inviteFriendUpdate">
+                                邀请好友注册成功且单笔交易金额大于等于<input type="text" style="width: 50px;" name="inviteFriendUpdateValue" ng-model="addInfo.inviteFriendUpdateValue">元
+                            </div>
+                            <div class="col-sm-3" ng-show="bindUpdateAccount">
+                                账号首次成功绑定微信公众号
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>奖励类型:</label>
+                            <div class="col-sm-3">
+                                现金返现
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>策略类型:</label>
+                            <div class="col-sm-2">
+                                <select class="form-control" ng-model="addInfo.policyType" name="policyType" ng-change="policyTypeChange()" ng-options="x.value as x.text for x in policyTypeSelect"/>
+                            </div>
+                        </div>
+                        <div id="awardPolicy" ng-show="policyTypeVisible1">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">奖励策略:</label>
+                                <div ng-repeat="item in addInfo.policyTypeList">
+                                    <div class="form-group">
+                                        <label ng-if="$index != 0" class="col-sm-2 control-label"></label>
+                                        <div class="col-sm-4">
+                                            <input hidden ng-model="item.index" value="$index">奖励<input type="text" style="width: 50px;" ng-model="item.awardNum">&nbsp;单日数量限制<input type="text" style="width: 50px;" ng-model="item.dayNums">&nbsp;概率<input type="text" style="width: 50px;" ng-model="item.awardOdds">%&nbsp;&nbsp;<a ng-if="$index == 0" ng-click="addPolicy($event)">新增奖励</a><a ng-if="$index != 0" ng-click="deletePolicy($index)" style="color: red;">删除</a><br />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-show="policyTypeVisible2">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">奖励策略:</label>
+                                <div class="col-sm-3">
+                                    <input type="text" style="width: 50px;" ng-model="addInfo.sectionBegin" name="sectionBegin">-<input type="text" style="width: 50px;" ng-model="addInfo.sectionEnd" name="sectionEnd">元
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>有效期类型:</label>
+                            <div class="col-sm-2">
+                                <select class="form-control" ng-model="addInfo.expiryDateType" name="expiryDateType" ng-options="x.value as x.text for x in expriryDateTypeSelect"/>
+
+                            </div>
+                        </div>
+                        <div class="form-group" ng-show="addInfo.expiryDateType != 'activity'">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>有效期设置:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" ng-model="addInfo.expiryNum" name="expiryNum">
+                                <div class="req_mesg" ng-show="horizontalCard.expiryNum.$dirty && horizontalCard.expiryNum.$invalid">
+                                    <span ng-show="horizontalCard.expiryNum.$error.number">有效期设置只能输入数字</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-show="!loginApp">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>单日奖励次数上限:</label>
+                            <div class="col-sm-3">
+                                <input type="number" class="form-control" ng-model="addInfo.expendNumber" name="expendNumber">
+                                <div class="req_mesg" ng-show="horizontalCard.expendNumber.$dirty && horizontalCard.expendNumber.$invalid">
+                                    <span ng-show="horizontalCard.expendNumber.$error.number">单日奖励次数上限只能输入数字</span>
+                                </div>
+                            </div>
+                            <label style="margin-top:7px; color:red;">注:-1为无限次数</label>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>奖励总次数:</label>
+                            <div class="col-sm-3">
+                                <input type="number" class="form-control" ng-model="addInfo.allNum" required name="allNum">
+                                <div class="req_mesg" ng-show="horizontalCard.allNum.$dirty && horizontalCard.allNum.$invalid">
+                                    <span ng-show="horizontalCard.allNum.$error.number">奖励总次数只能输入数字</span>
+                                    <span ng-show="horizontalCard.allNum.$error.required">奖励总次数不能为空</span>
+                                </div>
+                            </div>
+                            <label style="margin-top:7px; color:red;">注:-1为无限次数</label>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>是否关联后置条件:</label>
+                            <div class="col-sm-3 checkbox ">
+                                <label ><input type="radio" ng-model="addInfo.isLinkBehind" name="isLinkBehind" checked value="1"/>关联后置条件</label>
+                                <label ><input type="radio" ng-model="addInfo.isLinkBehind"  name="isLinkBehind" value="0"/>不关联后置条件</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>黑名单指定金额:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" ng-model="addInfo.blackReward" required ng-pattern="/^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/" name="blackReward">
+                                <div class="req_mesg" ng-show="horizontalCard.blackReward.$dirty && horizontalCard.blackReward.$invalid">
+                                    <span ng-show="horizontalCard.blackReward.$error.required">黑名单指定金额不能为空</span>
+                                    <span ng-show="horizontalCard.blackReward.$error.pattern">黑名单指定金额不能小于0</span>
+                                </div>
+                            </div>
+                            <label style="margin-top:7px;">元</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 bgff">
+                <div class="col-sm-12">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-6">
+                        <button class="btn btn-primary btn-mr20" type="button" ng-click="updateActivityContent()" ng-disabled="horizontalCard.$invalid || submitting">提交</button>
+                        <a class="btn btn-primary4" ng-click="goBackFun()" >返回</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

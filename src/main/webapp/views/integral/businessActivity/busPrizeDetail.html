@@ -1,0 +1,137 @@
+<!-- head -->
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a>主页</a></li>
+            <li><a>会员活动/积分抽奖</a></li>
+            <li class="active"><strong>奖品信息详情</strong></li>
+        </ol>
+    </div>
+</div>
+
+<!-- content-->
+<div class="wrapper wrapper-content animated fadeIn" ng-controller="prizeDetailCtrl">
+    <form class="form-horizontal" id="form1" name="horizontalCard">
+        <div class="form-group">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+
+                    <div class="row">
+                        <div class="ibox-title">
+                            <h5>奖品信息详情</h5>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>奖项说明:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" name="awardDesc" disabled ng-model="addInfo.awardDesc">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>奖品名称:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" name="awardName" disabled ng-model="addInfo.awardName">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>奖品数量:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" name="awardNum" disabled ng-model="addInfo.awardNum" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>中奖概率:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" name="awardOdds" disabled ng-model="addInfo.awardOdds" >
+                            </div>
+                            <label style="margin-top:7px;">%</label>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>每天最多派发数量:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" name="dayNums" disabled ng-model="addInfo.dayNums">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>每天最多中奖次数:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" name="dayMax" disabled ng-model="addInfo.dayMax" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>下发序列号:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" name="seqNo" disabled ng-model="addInfo.seqNo"  >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>中奖提示:</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="awardNotice" disabled ng-model="addInfo.awardNotice">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>奖品图片:</label>
+                            <div class="col-img" ng-if="addInfo.awardImg!=null&&addInfo.awardImg!=''" >
+                                <a href="{{addInfo.awardImg}}" fancybox rel="group">
+                                    <img width="250px" height="150px" ng-src="{{addInfo.awardImg}}"/>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>奖品类型:</label>
+                            <div class="col-sm-2">
+                                <select class="form-control" ng-model="addInfo.prize.rewardType" name="rewardType" disabled ng-options="x.value as x.text for x in rewardTypeSelect"/>
+                            </div>
+                        </div>
+                        <div ng-if="conSta">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><i class="red_req">*</i>选择券:</label>
+                                <div class="col-sm-3">
+                                    <select class="form-control" ng-model="addInfo.prize.calcType" name="calcType"  disabled ng-options="x.value as x.text for x in conList"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><i class="red_req">*</i>数量:</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" name="awardNum" disabled ng-model="addInfo.prize.awardNum" >
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-if="numSta">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><i class="red_req">*</i>数值:</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" name="awardNum" disabled ng-model="addInfo.prize.awardNum" >
+                                </div>
+                            </div>
+                            <div class="form-group" ng-if="integralSta">
+                                <label class="col-sm-2 control-label"><i class="red_req">*</i>有效期:</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" style="width:100px; float:left" name="expireDay" disabled ng-model="addInfo.prize.expireDay">
+                                    <span style="float:left; padding:7px 5PX 0 5PX;">单位:个月</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-if="moneySta">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><i class="red_req">*</i>金额:</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" name="awardNum" disabled ng-model="addInfo.prize.awardNum" >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 bgff">
+                <div class="col-sm-12">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-6">
+                        <a class="btn btn-primary4" ng-click="goBackFun()" >返回</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

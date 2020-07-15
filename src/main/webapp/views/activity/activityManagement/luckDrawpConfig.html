@@ -1,0 +1,146 @@
+<!-- head -->
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a>主页</a></li>
+            <li><a>会员活动</a></li>
+            <li class="active"><strong>积分抽奖</strong></li>
+        </ol>
+    </div>
+</div>
+<!-- 主要内容 -->
+<div class="wrapper wrapper-content animated fadeIn" ng-controller="luckDrawpConfigCtrl">
+    <form class="form-horizontal" id="form1" name="horizontalCardAdd">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="tabs-container tab_other">
+                        <uib-tabset>
+                            <uib-tab>
+                                <uib-tab-heading>
+									<span class="block m-t-xs"> <i class="fa fa-laptop"></i> <strong
+                                            class="font-bold">活动属性</strong>
+									</span>
+                                </uib-tab-heading>
+                                <div class="panel-body ibox float-e-margins">
+                                    <div class="ibox-title">
+                                        <h5>活动属性</h5>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label"><i class="red_req">*</i>活动名称:</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" name="actName" required maxlength="20" ng-model="addInfo.actName">
+                                            <div class="req_mesg" ng-show="horizontalCardAdd.actName.$dirty && horizontalCardAdd.actName.$invalid">
+                                                <span ng-show="horizontalCardAdd.actName.$error.required">活动名称不能为空</span>
+                                            </div>
+                                        </div>
+                                        <label style="margin-top:7px;">注:不能多于20个字</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">活动说明:</label>
+                                        <div class="col-sm-5">
+                                            <textarea type="text" class="form-control" ng-model="addInfo.actDesc">
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label"><i class="red_req">*</i>活动时间:</label>
+                                        <div class="col-sm-5">
+                                            <input id="d5231" class="form-control" type="datetime" required name="actBeginTime" ng-model="addInfo.actBeginTime" onchange=""  style="width:auto;display:inline-block;"
+                                                   onFocus="var d5232=$dp.$('d5232');WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss',onpicked:function(){d5232.focus();},maxDate:'#F{$dp.$D(\'d5232\')}'})"/>
+                                            ~
+                                            <input id="d5232" class="form-control" type="datetime" required name="actEndTime" ng-model="addInfo.actEndTime" onchange=""  style="width:auto;display:inline-block;"
+                                                   onFocus="WdatePicker({skin:'whyGreen',dateFmt: 'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'d5231\')}'})"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label"><i class="red_req">*</i>无抽奖资格提示:</label>
+                                        <div class="col-sm-5">
+                                            <input type="text" class="form-control" name="notice" required ng-model="addInfo.luckDrawpDetail.notice">
+                                            <div class="req_mesg" ng-show="horizontalCardAdd.notice.$dirty && horizontalCardAdd.notice.$invalid">
+                                                <span ng-show="horizontalCardAdd.notice.$error.required">无抽奖资格提示不能为空</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label"><i class="red_req">*</i>抽奖条件:</label>
+                                        <div class="col-sm-2">
+                                            <select class="form-control" required ng-model="addInfo.luckDrawpDetail.expendType" ng-change="expendTypeChange(true)"
+                                                    ng-options="x.value as x.text for x in expendTypeSelect"/>
+                                        </div>
+                                        <div class="col-sm-8" ng-if="expendTypeSta">
+                                            <div style="float:left;">
+                                                <label style="margin-top: 7px">每次抽奖消耗</label>
+                                                <input type="text"  class="textClass" style="width: 100px;" required name="amountRangeMin" ng-model="addInfo.luckDrawpDetail.expendNum">
+                                                <label class="fontClass">积分</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-8" ng-if="!expendTypeSta">
+                                            <div style="float:left;">
+                                                <label style="margin-top: 7px">当天每笔成功交易且金额 >= </label>
+                                                <input type="text"  class="textClass" style="width: 100px;" required name="expendNum" ng-model="addInfo.luckDrawpDetail.amountRangeMin">
+                                                <label class="fontClass">元获得一次抽奖</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label"><i class="red_req">*</i>每天最多抽奖次数:</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" name="expendNumber" required ng-model="addInfo.luckDrawpDetail.expendNumber" ng-pattern="/^(-1|[1-9][0-9]*)?$/" >
+                                            <div class="req_mesg" ng-show="horizontalCardAdd.expendNumber.$dirty && horizontalCardAdd.expendNumber.$invalid">
+                                                <span ng-show="horizontalCardAdd.expendNumber.$error.required">每天最多抽奖次数不能为空</span>
+                                                <span ng-show="horizontalCardAdd.expendNumber.$error.pattern">每天最多抽奖次数格式不符</span>
+                                            </div>
+                                        </div>
+                                        <label style="margin-top:7px;">(-1表示不限次数)</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label"><i class="red_req">*</i>活动介绍:</label>
+                                        <div class="col-sm-8">
+                                            <summernote type="text" required config="summeroptions" id="summernote" class="form-control" name="actRule"  ng-model="addInfo.actRule" editable="editable" editor="editor" >
+                                            </summernote>
+                                            <div class="req_mesg" ng-show="horizontalCardAdd.actRule.$dirty && horizontalCardAdd.actRule.$invalid">
+                                                <span ng-show="horizontalCardAdd.actRule.$error.required">活动介绍不能为空</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label"></label>
+                                        <div class="col-sm-6">
+                                            <button class="btn btn-primary btn-mr20" type="button" ng-click="saveLuckDrawpConfig()" ng-disabled="horizontalCardAdd.$invalid || submitting">提交</button>
+                                            <a class="btn btn-primary4" ui-sref="activities.activityManagement" >返回</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </uib-tab>
+                            <uib-tab>
+                                <uib-tab-heading>
+									<span class="block m-t-xs"> <i class="fa fa-laptop"></i> <strong
+                                            class="font-bold">奖项配置</strong>
+									</span>
+                                </uib-tab-heading>
+                                <div class="panel-body ibox float-e-margins">
+                                    <div class="ibox-title">
+                                        <h5>奖项配置</h5>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-12" >
+                                            <a class="btn btn-primary5 btn-mr20" style="float:right;" type="button" ng-show="hasPermit('activityManagement.addLuckPrizeTemplate')" ng-click="addPrizeClick()" >新增</a>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <div class="gridStyle"  ui-grid="userGrid" ui-grid-selection ui-grid-resize-columns ui-grid-pinning></div>
+                                            <div ng-show="loadImg" class="timg"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </uib-tab>
+                        </uib-tabset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+

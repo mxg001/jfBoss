@@ -1,0 +1,147 @@
+<!-- head -->
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a>主页</a></li>
+            <li><a>业务管理</a></li>
+            <li class="active"><strong>业务组基本信息</strong></li>
+        </ol>
+    </div>
+</div>
+
+<!-- content-->
+<div class="wrapper wrapper-content animated fadeIn" ng-controller="businessBasicCtrl">
+    <form class="form-horizontal" id="form1" name="horizontalCard">
+        <div class="form-group">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+
+                    <div class="row">
+                        <div class="ibox-title">
+                            <h5>会员等级与积分</h5>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <button class="btn btn-primary5 btn-mr20" style="float:right;" type="button" ng-click="addModal(1)" >新增</button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button class="btn btn-primary5 btn-mr20" style="float:right;" type="button" ng-click="addModal(2)" >新增</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <div style="height:300px"  ui-grid="growLevelGrid" ui-grid-selection ui-grid-resize-columns ui-grid-pinning></div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div style="height:300px"  ui-grid="mLevelGrid" ui-grid-selection ui-grid-resize-columns ui-grid-pinning></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="ibox-title">
+                            <h5>会员成长值处理规则</h5>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <span style="float:left;padding:7px 5px 0 61px;font-weight:700;">成长值调整规则:</span>
+                                <span style="float:left;padding:7px 5px 0 5px;">每达到新等级,会员自获得当天算起</span>
+                                <input type="text" class="form-control" style="width:50px; float:left" name="levelEffeDate" required ng-model="addInfo.levelEffeDate">
+                                <span style="float:left; padding:7px 5PX 0 5PX;">天内有效，到期当天24点成长值 * </span>
+                                <input type="text" class="form-control" style="width:50px; float:left" name="levelRate" required ng-model="addInfo.levelRate">
+                                <span style="float:left;padding:7px 5PX 0 5PX;">+24点后成长值重新计算等级</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="ibox-title">
+                            <h5>积分说明</h5>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-11">
+                                <summernote type="text" config="summeroptions" id="summernote" class="form-control" ng-model="scoreDesc" >
+                                </summernote>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="ibox-title">
+                            <h5>会员等级与成长值说明</h5>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-11">
+                                <summernote type="text" config="summeroptions" id="summernote" class="form-control" ng-model="levelDesc" >
+                                </summernote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 bgff">
+                <div class="col-sm-12">
+                    <div class="col-lg-3"></div>
+                    <div class="col-sm-6">
+                        <button class="btn btn-primary btn-mr20" type="button" ng-click="addInfoSubmit()" ng-disabled="horizontalCard.$invalid || submitting">提交</button>
+                        <a class="btn btn-primary4" ui-sref="management.business" >返回</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    <div id="addInfoModal" class="modal fade form-horizontal" tabindex="4" role="dialog">
+        <div class="modal-dialog" style="height:450px;width:900px">
+            <div class="modal-content" >
+                <form class="form-horizontal" name="horizontalCardAdd" novalidate>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            &times;</button>
+                        <h3 class="modal-title">{{levelTitle}}</h3>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>等级:</label>
+                            <div class="col-sm-3">
+                                <select class="form-control" name="level" required ng-model="addInfoEntry.level"
+                                        ng-options="x.value as x.text for x in levelSelect"/>
+                                <div class="req_mesg" ng-show="horizontalCardAdd.level.$dirty && horizontalCardAdd.level.$invalid">
+                                    <span ng-show="horizontalCardAdd.level.$error.required">等级不能为空</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>{{levelNameStr}}:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control"  name="levelName" required ng-model="addInfoEntry.levelName">
+                                <div class="req_mesg" ng-show="horizontalCardAdd.levelName.$dirty && horizontalCardAdd.levelName.$invalid">
+                                    <span ng-show="horizontalCardAdd.levelName.$error.required">{{levelNameStr}}不能为空</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>{{numNameStr}}:</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" style="width:100px; float:left" ng-model="addInfoEntry.minNum">
+                                <div style="float:left; padding:7px 5PX 0 5PX;"> - </div>
+                                <input type="text" class="form-control" style="width:100px; float:left" ng-model="addInfoEntry.maxNum">
+                            </div>
+                            <span style="color:red;padding:7px;display:inline-block;">注:n为无限大</span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-group control-label">
+                            <label class="col-sm-1 control-label"></label>
+                            <div class="col-sm-6">
+                                <button class="btn btn-primary btn-mr20" ng-show="!editSta" ng-disabled="horizontalCardAdd.$invalid || submitting" type="button" ng-click="saveModal('add')">确定</button>
+                                <button class="btn btn-primary btn-mr20" ng-show="editSta" ng-disabled="horizontalCardAdd.$invalid || submitting" type="button" ng-click="saveModal('edit')" >确定</button>
+                                <button class="btn btn-primary4" type="button" ng-click='hideModal()'>返回</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

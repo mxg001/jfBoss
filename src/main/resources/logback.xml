@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<property name="LOG_HOME" value="/opt/logs/jfBoss/" />
+
+	<!-- 控制台输出 -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}[%thread] %level %logger{20} [%method,%line] %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/boss2.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>${LOG_HOME}/boss2.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<!-- keep 30 days' worth of history -->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %level %logger{20} [%method,%line] %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<logger name="jdbc.sqltiming" level="error" />
+	<logger name="jdbc.audit" level="error" />
+	<logger name="jdbc.connection" level="error" />
+	<logger name="jdbc.resultset" level="error" />
+
+<!--	<logger name="com.ibatis" level="debug" />-->
+<!--	<logger name="cn.eeepay.framework.dao" level="DEBUG" />-->
+
+<!--	#log4j.logger.com.ibatis = debug
+	#log4j.logger.com.ibatis.common.jdbc.SimpleDataSource = debug
+	#log4j.logger.com.ibatis.common.jdbc.ScriptRunner = debug
+	#log4j.logger.com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate = debug
+	#log4j.logger.java.sql.Connection = debug
+	log4j.logger.java.sql.Statement = debug
+	log4j.logger.java.sql.PreparedStatement = debug
+	log4j.logger.java.sql.ResultSet =debug-->
+	<root level="info">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</root>
+</configuration> 

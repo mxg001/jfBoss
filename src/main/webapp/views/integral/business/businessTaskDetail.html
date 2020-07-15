@@ -1,0 +1,132 @@
+<!-- head -->
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a>主页</a></li>
+            <li><a>业务管理</a></li>
+            <li><a>任务选择</a></li>
+            <li class="active"><strong>任务详情</strong></li>
+        </ol>
+    </div>
+</div>
+
+<!-- content-->
+<div class="wrapper wrapper-content animated fadeIn" ng-controller="businessTaskDetailCtrl">
+    <form class="form-horizontal" id="form1" name="horizontalCard">
+        <div class="form-group">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+
+                    <div class="row">
+                        <div class="ibox-title">
+                            <h5>任务基本信息</h5>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>任务名称:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" name="taskName" readonly maxlength="20" ng-model="addInfo.taskName">
+                                <div class="req_mesg" ng-show="horizontalCard.taskName.$dirty && horizontalCard.taskName.$invalid">
+                                    <span ng-show="horizontalCard.taskName.$error.required">任务名称不能为空</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>任务简介:</label>
+                            <div class="col-lg-5">
+                                <textarea type="text" class="form-control" readonly name="taskDesc" required ng-model="addInfo.taskDesc">
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>任务说明:</label>
+                            <div class="col-sm-8" >
+                                <div style="height: 250px;overflow:hidden;overflow-y:scroll" class="form-control" ng-bind-html="addInfo.taskOverview | trustHtml" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>任务图标:</label>
+                            <div class="col-img" ng-if="addInfo.imgUrl!=null&&addInfo.imgUrl!=''" >
+                                <a href="{{addInfo.imgUrl}}" fancybox rel="group">
+                                    <img width="250px" height="150px" ng-src="{{addInfo.imgUrl}}"/>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>任务类型:</label>
+                            <div class="col-sm-3">
+                                <select class="form-control" name="taskType" ng-change="taskTypeChange()" disabled ng-model="addInfo.taskType" ng-options="x.value as x.text for x in taskTypeList"/>
+                                <div class="req_mesg" ng-show="horizontalCard.taskType.$dirty && horizontalCard.taskType.$invalid">
+                                    <span ng-show="horizontalCard.taskType.$error.required">任务类型不能为空</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>触发类型:</label>
+                            <div class="col-sm-3">
+                                <select class="form-control"  disabled="" name="taskParams" required ng-model="addInfo.taskParams" ng-options="x.value as x.text for x in triggerTypeSelect"/>
+                                <div class="req_mesg" ng-show="horizontalCard.taskParams.$dirty && horizontalCard.taskParams.$invalid">
+                                    <span ng-show="horizontalCard.taskParams.$error.required">触发类型不能为空</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>流水下发方式:</label>
+                            <div class="col-sm-3">
+                                <select class="form-control" disabled name="grantType" required ng-model="addInfo.grantType" ng-options="x.value as x.text for x in grantTypeSelect"/>
+                                <div class="req_mesg" ng-show="horizontalCard.grantType.$dirty && horizontalCard.grantType.$invalid">
+                                    <span ng-show="horizontalCard.grantType.$error.required">流水下发方式不能为空</span>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>可调用次数:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" name="restrictNum" readonly ng-model="addInfo.restrictNum" ng-pattern="/^(-1|[1-9][0-9]*)?$/" >
+                                <div class="req_mesg" ng-show="horizontalCard.restrictNum.$dirty && horizontalCard.restrictNum.$invalid">
+                                    <span ng-show="horizontalCard.restrictNum.$error.required">可调用次数不能为空</span>
+                                    <span ng-show="horizontalCard.restrictNum.$error.pattern">可调用次数格式不符</span>
+                                </div>
+                            </div>
+                            <span style="color:red;padding:7px;display:inline-block;">注:-1为无限次数</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>调用频率:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" name="restrictFrequency" id="restrictFrequency" readonly ng-model="addInfo.restrictFrequency"  ng-pattern="/^(-1|[1-9][0-9]*)?$/" >
+                                <div class="req_mesg" ng-show="horizontalCard.restrictFrequency.$dirty && horizontalCard.restrictFrequency.$invalid">
+                                    <span ng-show="horizontalCard.restrictFrequency.$error.required">调用频率不能为空</span>
+                                    <span ng-show="horizontalCard.restrictFrequency.$error.pattern">调用频率格式不符</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <select class="form-control" name="frequencyType" disabled ng-model="addInfo.frequencyType" ng-options="x.value as x.text for x in frequencyTypeSelect"/>
+                            </div>
+                            <span style="color:red;padding:7px;display:inline-block;">注:-1为无限次数</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="red_req">*</i>业务配置:</label>
+                            <div class="col-sm-10">
+                                <div style="height:300px"  ui-grid="userGrid" ui-grid-selection ui-grid-resize-columns ui-grid-pinning></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 bgff">
+                <div class="col-sm-12">
+                    <div class="col-lg-3"></div>
+                    <div class="col-sm-6">
+                        <a class="btn btn-primary4" ui-sref="management.businessTask({businessNo:businessNo})" >返回</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>

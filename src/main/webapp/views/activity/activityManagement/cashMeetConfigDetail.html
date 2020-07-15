@@ -1,0 +1,114 @@
+<!-- head -->
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a>主页</a></li>
+            <li><a>会员活动</a></li>
+            <li class="active"><strong>会员现金礼遇季</strong></li>
+        </ol>
+    </div>
+</div>
+<!-- 主要内容 -->
+<div class="wrapper wrapper-content animated fadeIn" ng-controller="cashMeetConfigDetailCtrl">
+    <form class="form-horizontal" id="form1" name="horizontalCardAdd">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="tabs-container tab_other">
+                        <uib-tabset>
+                            <uib-tab>
+                                <uib-tab-heading>
+									<span class="block m-t-xs"> <i class="fa fa-laptop"></i> <strong
+                                            class="font-bold">活动属性</strong>
+									</span>
+                                </uib-tab-heading>
+                                <div class="panel-body ibox float-e-margins">
+                                    <div class="ibox-title">
+                                        <h5>活动属性</h5>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label"><i class="red_req">*</i>活动名称:</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" name="actName" disabled maxlength="20" ng-model="addInfo.actName">
+                                            <div class="req_mesg" ng-show="horizontalCardAdd.actName.$dirty && horizontalCardAdd.actName.$invalid">
+                                                <span ng-show="horizontalCardAdd.actName.$error.required">活动名称不能为空</span>
+                                            </div>
+                                        </div>
+                                        <label style="margin-top:7px;">注:不能多于20个字</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">活动说明:</label>
+                                        <div class="col-sm-5">
+                                            <textarea type="text" class="form-control" disabled ng-model="addInfo.actDesc">
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label"><i class="red_req">*</i>活动时间:</label>
+                                        <div class="col-sm-5">
+                                            <input id="d5231" class="form-control" type="datetime" disabled name="actBeginTime" ng-model="addInfo.actBeginTime" onchange=""  style="width:auto;display:inline-block;"
+                                                   onFocus="var d5232=$dp.$('d5232');WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss',onpicked:function(){d5232.focus();},maxDate:'#F{$dp.$D(\'d5232\')}'})"/>
+                                            ~
+                                            <input id="d5232" class="form-control" type="datetime" disabled name="actEndTime" ng-model="addInfo.actEndTime" onchange=""  style="width:auto;display:inline-block;"
+                                                   onFocus="WdatePicker({skin:'whyGreen',dateFmt: 'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'d5231\')}'})"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label"><i class="red_req">*</i>提现截止时间:</label>
+                                        <div class="col-sm-5">
+                                            <input id="d5233" class="form-control" type="datetime" disabled name="withdrawalTimeEnd" ng-model="addInfo.withdrawalTimeEnd" onchange=""  style="width:auto;display:inline-block;"
+                                                   onFocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label"><i class="red_req">*</i>活动介绍:</label>
+                                        <div class="col-sm-8" >
+                                            <div style="height: 250px;overflow:hidden;overflow-y:scroll" class="form-control" ng-bind-html="addInfo.actRule | trustHtml" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label"></label>
+                                        <div class="col-sm-6">
+                                            <a class="btn btn-primary4" ng-click="goBackFun()" >返回</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </uib-tab>
+                            <uib-tab>
+                                <uib-tab-heading>
+									<span class="block m-t-xs"> <i class="fa fa-laptop"></i> <strong
+                                            class="font-bold">内容设置</strong>
+									</span>
+                                </uib-tab-heading>
+                                <div class="panel-body ibox float-e-margins">
+                                    <div class="ibox-title">
+                                        <h5>后置条件</h5>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <div class="gridStyle"  ui-grid="afterConditionGrid" ui-grid-selection ui-grid-resize-columns ui-grid-pinning></div>
+                                            <div ng-show="loadImg" class="timg"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-body ibox float-e-margins">
+                                    <div class="ibox-title">
+                                        <h5>活动内容</h5>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <div class="gridStyle"  ui-grid="activityContentGrid" ui-grid-selection ui-grid-resize-columns ui-grid-pinning></div>
+                                            <div ng-show="loadImg" class="timg"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </uib-tab>
+                        </uib-tabset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
